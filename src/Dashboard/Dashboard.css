@@ -1,0 +1,17 @@
+.header_custom {
+  font-size: 4em!important;
+  font-weight: normal!important;
+  padding-top : 3em!important;
+  padding-bottom : 2.5em!important;
+  background-image: url("../img/voie_ferree.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%!important;
+}
+
+.triple_card_row {
+  padding-top : 3em!important;
+  padding-bottom : 2em!important;
+}
