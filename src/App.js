@@ -8,6 +8,7 @@ import LoginPage from './LoginPage';
 import Game from "./TicTacToe"
 import Dashboard from "./Dashboard/Dashboard"
 import NewConsultation from "./NewConsultation/NewConsultation"
+import ConsultationList from "./ConsultationList/ConsultationList"
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
             <Route exact path="/" component={Dashboard}/>
             <Route exact path="/temp" component={LoginPage}/>
             <Route exact path="/new_consultation" component={NewConsultation}/>
+            <Route exact path="/consultation_list" component={ConsultationList}/>
             <Route exact path="/TicTacToe" component={Game}/>
           </div>
       </HashRouter>

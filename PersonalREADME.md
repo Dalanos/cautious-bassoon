@@ -9,3 +9,8 @@ npm install semantic-ui
 
 npm i react-router-dom --save
 npm install axios
+
+
+
+
+npm run start-mockapi

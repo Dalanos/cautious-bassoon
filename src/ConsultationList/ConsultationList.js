@@ -11,13 +11,14 @@ import HeaderBar from "./../GenericElements/HeaderBar"
 import Footer from "./../GenericElements/Footer"
 import Body from "./../GenericElements/Body"
 import TopPanel from "./../GenericElements/TopPanel"
-import "./Dashboard.css"
+// import "./Dashboard.css"
 import FavoriteImg  from './../img/favorite.png'
 import PopularImg  from './../img/flame.png'
 import CreateImg  from './../img/new_project.png'
 import NotificationImg  from './../img/notification.png'
 import ProfileImg  from './../img/profile.png'
 import AllAvailableImg  from './../img/world.png'
+import axios from 'axios';
 
 
 const ImageDashboard = () => (
@@ -60,22 +61,76 @@ const TripleCardGroup = (props) => {
              link={props.data_card_2.link}
            />
          </Grid.Column>
-         <Grid.Column>
-           <GenericCard
-             image={props.data_card_3.image}
-             header={props.data_card_3.header}
-             meta={props.data_card_3.meta}
-             description={props.data_card_3.description}
-             link={props.data_card_3.link}
-           />
-         </Grid.Column>
        </Grid.Row>
      </Grid>
     );
 }
 
 class CardsDashboard extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      number_of_cards: 0,
+      card_list : [],
+    }
+    this.getNumberOfCards();
+  }
+
+  getNumberOfCards() {
+    console.log(this.props.card_list)
+    for(let i = 0; i < this.props.card_list; i++) {
+      // loop through your data
+      console.log(i)
+    }
+    for(let value in this.props.card_list) {
+     console.log("Hey")
+    }
+  }
+
   render () {
+    const card_data=this.props.card_data;
+
+
+    return (
+      <Container>
+        {/* <TripleCardGroup
+          data_card_1={card_data.data_card_1}
+          data_card_2={card_data.data_card_2}
+
+        />
+        <TripleCardGroup
+          data_card_1={card_data.data_card_4}
+          data_card_2={card_data.data_card_5}
+          data_card_3={card_data.data_card_6}
+        /> */}
+      </Container>
+    );
+  }
+}
+
+class ConsultationList extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      number_of_consultations: 0,
+      consultation_list: [],
+    }
+
+  }
+
+
+  componentDidMount() {
+    axios.get("http://localhost:3001/consultation_header/")
+      .then(res => {
+        this.setState({
+          number_of_consultations : res.data.number_of_consultations,
+          consultation_list: res.data.consultation_list,
+        });
+      });
+  }
+
+
+  render() {
     const card_data = {
       data_card_1 : {
         image : NotificationImg,
@@ -99,7 +154,7 @@ class CardsDashboard extends React.Component {
         image : AllAvailableImg,
         header:'Consultations disponibles',
         description:'Découvrez les sujets sur lesquels vous pouvez apporter votre voix',
-        link:'/consultation_list'
+        link:'/temp'
       },
       data_card_5 : {
         image : PopularImg,
@@ -114,33 +169,12 @@ class CardsDashboard extends React.Component {
         link:'/temp'
       },
     }
-
-    return (
-      <Container>
-        <TripleCardGroup
-          data_card_1={card_data.data_card_1}
-          data_card_2={card_data.data_card_2}
-          data_card_3={card_data.data_card_3}
-        />
-        <TripleCardGroup
-          data_card_1={card_data.data_card_4}
-          data_card_2={card_data.data_card_5}
-          data_card_3={card_data.data_card_6}
-        />
-      </Container>
-    );
-  }
-}
-
-class Dashboard extends React.Component {
-
-  render() {
     return (
       <React.Fragment>
           <HeaderBar/>
           <Body>
-          <ImageDashboard/>
-          <CardsDashboard/>
+            Number of consultations: {this.state.number_of_consultations}
+            <CardsDashboard card_list={card_data}/>
           </Body>
           <Footer/>
       </React.Fragment>
@@ -149,4 +183,4 @@ class Dashboard extends React.Component {
 
 }
 
-export default Dashboard
+export default ConsultationList

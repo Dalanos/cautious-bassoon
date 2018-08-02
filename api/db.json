@@ -1,18 +1,59 @@
 {
-  "posts": [
-    { "id": 1, "title": "json-servedzqdr", "author": "typicode" },
-    { "id": 2, "title": "json-servedzqdr", "author": "typicode" },
-    { "id": 3, "title": "json-servedzqdr", "author": "typicode" },
-    { "id": 4, "title": "json-servedzqdr", "author": "typicode" }
+  "list_consultation_organisators_possibility": [
+    {
+      "id": 1,
+      "name": "Direction Innovation"
+    },
+    {
+      "id": 2,
+      "name": "Comité Executif"
+    },
+    {
+      "id": 3,
+      "name": "Direction du Développement Durable"
+    },
+    {
+      "id": 4,
+      "name": "Maintenance & Travaux"
+    },
+    {
+      "id": 5,
+      "name": "Direction Centrale"
+    }
   ],
-  "cons_creating_entity": [
-    { "id": 1, "name": "Direction Innovation" },
-    { "id": 2, "name": "Comité Executif" },
-    { "id": 3, "name": "Direction du Développement Durable" },
-    { "id": 4, "name": "Maintenance & Travaux" }
-  ],
-  "comments": [
-    { "id": 1, "body": "some comment", "postId": 1 }
-  ],
-  "profile": { "name": "typicode" }
+  "consultation_header": {
+    "number_of_consultations": 2,
+    "consultation_list": [
+      {
+        "id": 1,
+        "consultation_name": "Election des listes des représentants syndicaux",
+        "consultation_pitch_sentence": "Elisez vos futurs représentants pour l'année 2018",
+        "consultation_description": "Un super lorem ipsum qui laque avec des <br> retours à la ligne",
+        "consultation_organisator_id": 5,
+        "start_date": "15/07/2018",
+        "end_date": "01/11/2018",
+        "blockchain_vote": true,
+        "media_video": true,
+        "media_blog": true,
+        "media_comments": true,
+        "media_yammer": true,
+        "background_image": "randomlienàdefinire"
+      },
+      {
+        "id": 2,
+        "consultation_name": "Déménagement de la DSI",
+        "consultation_pitch_sentence": "Donnez votre avis sur le déménagement de la DSI qui aura lieu à l'été 2019",
+        "consultation_description": "Voici le programme actuel proposé par la direction immobiliere. Les points suivants sont encore à décider. Nous souhaiterions votre avis sur le sujet",
+        "consultation_organisator_id": 2,
+        "start_date": "01/08/2018",
+        "end_date": "01/12/2018",
+        "blockchain_vote": false,
+        "media_video": true,
+        "media_blog": true,
+        "media_comments": true,
+        "media_yammer": false,
+        "background_image": "randomlienàdefinire"
+      }
+    ]
+  }
 }
