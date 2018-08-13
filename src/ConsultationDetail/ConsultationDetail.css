@@ -1,0 +1,32 @@
+.buttons_alignement {
+  text-align: right;
+}
+
+.button_like_fav {
+  text-align: left!important;
+  background-color: transparent!important;
+}
+
+.encadrer_bloc {
+  -webkit-box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5!important;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5!important;
+    -webkit-transition: -webkit-box-shadow .1s ease,-webkit-transform .1s ease!important;
+    transition: -webkit-box-shadow .1s ease,-webkit-transform .1s ease!important;
+    -o-transition: box-shadow .1s ease,transform .1s ease!important;
+    transition: box-shadow .1s ease,transform .1s ease!important;
+    transition: box-shadow .1s ease,transform .1s ease,-webkit-box-shadow .1s ease,-webkit-transform .1s ease!important;
+    border-radius: 5px!important;
+}
+
+.reactions_box{
+  width: -webkit-fill-available!important;
+}
+
+.margin_opinion_row{
+  margin-left: 2em;
+    margin-right: 1em;
+}
+
+.ui .menu {
+      /* display: -webkit-inline-box!important; */
+}

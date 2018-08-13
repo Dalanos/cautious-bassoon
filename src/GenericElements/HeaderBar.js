@@ -8,13 +8,16 @@ import {
   Menu,
   Button,
 } from 'semantic-ui-react'
+import {
+  Link
+} from "react-router-dom";
 import logoImg  from './../img/logo.png'
 
 const HeaderBar = () => (
   <div>
     <Menu fixed='top' inverted>
       <Container>
-        <Menu.Item as='a' header>
+        <Menu.Item as={Link} to="/" header>
           <Image size='mini' src={logoImg} style={{ marginRight: '1.5em' }} />
           Project Icarus
         </Menu.Item>
