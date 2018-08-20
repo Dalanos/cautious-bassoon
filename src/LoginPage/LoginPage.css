@@ -1,0 +1,14 @@
+body > div,
+body > div > div,
+body > div > div > div.login-form {
+  height: 100%;
+}
+
+.background_image {
+  background-image: url("../img/structural/nature_sombre.jpg");
+  background-size: cover;
+}
+
+.segment_background {
+  background-color: transparent!important;
+}

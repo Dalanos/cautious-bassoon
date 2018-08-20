@@ -10,6 +10,8 @@ npm install semantic-ui
 npm i react-router-dom --save
 npm install axios
 npm install query-string
+npm install react-cookie
+
 
 
 

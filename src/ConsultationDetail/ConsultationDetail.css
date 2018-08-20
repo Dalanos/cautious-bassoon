@@ -19,7 +19,8 @@
 }
 
 .reactions_box{
-  width: -webkit-fill-available!important;
+  width: -webkit-stretched!important;
+  /* width: -webkit-fill-available!important; */
 }
 
 .margin_opinion_row{

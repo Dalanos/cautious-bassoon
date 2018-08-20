@@ -1,0 +1,22 @@
+.button.favorite:hover {
+    opacity: 1;
+    color: rgb(241, 204, 59)!important;
+}
+
+.button.popular:hover {
+    opacity: 1;
+    color: rgb(249, 39, 39)!important;
+}
+
+.button_search {
+  text-align: left!important;
+  background-color: transparent!important;
+}
+
+.button_favorite_clicked {
+  color: rgb(241, 204, 59)!important;
+}
+
+.button_popular_clicked {
+  color: rgb(249, 39, 39)!important;
+}

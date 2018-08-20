@@ -6,22 +6,23 @@ import {
   Dropdown,
   Image,
   Menu,
-  Button,
 } from 'semantic-ui-react'
 import {
   Link
 } from "react-router-dom";
 import logoImg  from './../img/logo.png'
+import profileImg  from './../img/profile.png'
+import "./GenericCSS.css"
 
 const HeaderBar = () => (
   <div>
-    <Menu fixed='top' inverted>
+    <Menu fixed='top' className="header_bar" >
       <Container>
-        <Menu.Item as={Link} to="/" header>
+        <Menu.Item as={Link} to="/" header className="header_bar_hide_border_left_main_button">
           <Image size='mini' src={logoImg} style={{ marginRight: '1.5em' }} />
-          Project Icarus
+          Aurora
         </Menu.Item>
-        <Menu.Item as='a'>Home</Menu.Item>
+        <Menu.Item as={Link} to="/">Liste des sujets</Menu.Item>
 
         <Dropdown item simple text='Dropdown'>
           <Dropdown.Menu>
@@ -40,13 +41,9 @@ const HeaderBar = () => (
             <Dropdown.Item>List Item</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        <Menu.Item position='right'>
-          <Button as='a' inverted>
-            Log in
-          </Button>
-          <Button as='a' inverted primary={false} style={{ marginLeft: '0.5em' }}>
-            Sign Up
-          </Button>
+        <Menu.Item as={Link} to="/" position="right">
+          <Image size='mini' src={profileImg} style={{ marginRight: '1.5em' }} circular />
+          Identifiez-vous
         </Menu.Item>
       </Container>
     </Menu>

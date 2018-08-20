@@ -13,9 +13,9 @@ import {
   Checkbox,
   Divider
 } from 'semantic-ui-react'
-import {
-  Link
-} from "react-router-dom";
+// import {
+//   Link
+// } from "react-router-dom";
 import HeaderBar from "./../GenericElements/HeaderBar"
 import Footer from "./../GenericElements/Footer"
 import Body from "./../GenericElements/Body"
@@ -76,9 +76,6 @@ const NavigationBar = props => {
 };
 
 class OpinionView extends React.Component {
-  constructor(props){
-    super(props);
-  }
 
   render() {
     return (
@@ -181,7 +178,7 @@ class ConsultationDetail extends React.Component {
   componentDidMount() {
     axios.get("http://localhost:3001/consultation_details/")
       .then(res => {
-        var consultation_info = res.data[this.state.id-1];
+        var consultation_info = res.data.consultation_list[this.state.id-1];
 
         this.setState({
           consultation_name: consultation_info.consultation_name,

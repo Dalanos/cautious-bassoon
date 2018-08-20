@@ -1,13 +1,14 @@
 .header_custom {
-  font-size: 4em!important;
+  font-size: 2.5em!important;
   font-weight: normal!important;
-  padding-top : 3em!important;
-  padding-bottom : 2.5em!important;
-  background-image: url("../img/voie_ferree.jpg");
+  padding-top : 2.3em!important;
+  padding-bottom : 1.8em!important;
+  background-image: url("../img/structural/rsz_brainstorming_sombre.jpg");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background-position: top center;
   width: 100%!important;
 }
 

@@ -1,8 +1,35 @@
+/* PANEL */
+
 .top_panel {
-  font-size: 4em!important;
-  font-weight: normal!important;
-  padding-top : 3em!important;
-  padding-bottom : 2.5em!important;
+  padding-top: 6em!important;
+  padding-bottom: 6em!important;
   background-color: ghostwhite;
+  width: 100%!important;
+}
+
+
+.top_panel_text_color {
+    color: white!important;
+}
+
+/* HEADER BAR */
+
+.header_bar {
+  display: contents!important;
+}
+
+.ui.menu .item:before {
+  width: 0px!important;
+}
+
+.header_bar_hide_border_left_main_button {
+  border-left: 0px!important;
+}
+
+/* BODY */
+
+.body {
+  margin-top: 3em!important;
+  margin-bottom: 3em!important;
   width: 100%!important;
 }

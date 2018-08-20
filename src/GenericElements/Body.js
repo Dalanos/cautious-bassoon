@@ -1,12 +1,9 @@
 import React from 'react'
 import { Container } from 'semantic-ui-react'
+import "./GenericCSS.css"
 
 const Body = ({ children }) => (
-  <Container style={{
-    marginTop: '4.1em',
-    marginBottom: '3em',
-    width: '100%',
-    }}>
+  <Container className="body">
     {children}
   </Container>
 )
