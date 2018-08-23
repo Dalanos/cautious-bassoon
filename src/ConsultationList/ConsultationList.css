@@ -20,3 +20,8 @@
 .button_popular_clicked {
   color: rgb(249, 39, 39)!important;
 }
+
+.search_bar {
+  text-align: left;
+  margin-bottom: 3em;
+}

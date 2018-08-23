@@ -3,8 +3,7 @@ import {
   Route,
   HashRouter
 } from "react-router-dom";
-import { CookiesProvider, withCookies, Cookies } from 'react-cookie';
-import { instanceOf } from 'prop-types';
+import { CookiesProvider, withCookies } from 'react-cookie';
 
 import LoginPage from './LoginPage/LoginPage';
 import Game from "./TicTacToe"
@@ -17,30 +16,9 @@ import Test from "./test"
 import './App.css';
 
 class App extends Component {
-  static propTypes = {
-    cookies: instanceOf(Cookies).isRequired
-  };
 
   constructor(props) {
     super(props);
-
-    const { cookies } = props;
-    // cookies.set('name', "Harry", { path: '/' });
-    // cookies.set('age', 16, { path: '/' });
-    // cookies.set('height', 185, { path: '/' });
-
-    // const d = new Date();
-    // d.setTime(d.getTime() + (5000));
-    // cookies.set('expire', "value", {expires : d})
-    // console.log(cookies.getAll('name'))
-    //
-    //
-    // setTimeout(function () {
-    //     console.log("Hello");
-    //     console.log(cookies.getAll('name'))
-    // }, 5010);
-    //
-    // console.log(cookies.getAll('name'))
   }
 
 

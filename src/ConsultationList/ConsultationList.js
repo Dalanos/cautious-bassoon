@@ -5,8 +5,6 @@ import {
   Container,
   Button
 } from 'semantic-ui-react'
-import { withCookies, Cookies } from 'react-cookie';
-import { instanceOf } from 'prop-types';
 import axios from 'axios';
 
 import HeaderBar from "./../GenericElements/HeaderBar"
@@ -66,8 +64,8 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <Container>
-        <Grid>
+      <Container className="search_bar">
+        {/* <Grid>
           <Grid.Row stretched>
             <Grid.Column width={4} >
               <Input
@@ -78,8 +76,8 @@ class SearchBar extends React.Component {
                 value={this.state.searchDetails.searchInput}
                 onChange={this.handleChange}/>
             </Grid.Column>
-            <Grid.Column width={1} ></Grid.Column>
-            <Grid.Column width={3} >
+             <Grid.Column width={1} ></Grid.Column>
+            <Grid.Column >
               <Button
                 icon='star'
                 size="large"
@@ -88,7 +86,7 @@ class SearchBar extends React.Component {
                   "button_search favorite button_favorite_clicked" : "button_search favorite "}
                 onClick={this.handleClick.bind(this, "Favoris")}/>
             </Grid.Column>
-            <Grid.Column width={3}>
+            <Grid.Column >
               <Button
                 icon='fire'
                 size="large"
@@ -98,7 +96,28 @@ class SearchBar extends React.Component {
                 onClick={this.handleClick.bind(this, "Populaires")}/>
             </Grid.Column>
           </Grid.Row>
-        </Grid>
+        </Grid> */}
+        <Input
+          icon='search'
+          type="text"
+          loading={this.state.searching}
+          placeholder='Search...'
+          value={this.state.searchDetails.searchInput}
+          onChange={this.handleChange}/>
+        <Button
+          icon='star'
+          size="large"
+          content='Favoris'
+          className={this.state.searchDetails.favorite ?
+            "button_search favorite button_favorite_clicked" : "button_search favorite "}
+          onClick={this.handleClick.bind(this, "Favoris")}/>
+          <Button
+            icon='fire'
+            size="large"
+            content='Populaires'
+            className={this.state.searchDetails.popular ?
+              "button_search popular button_popular_clicked" : "button_search popular "}
+            onClick={this.handleClick.bind(this, "Populaires")}/>
       </Container>
     );
   }
@@ -139,9 +158,11 @@ class ConsultationList extends React.Component {
               description: res.data.consultation_list[i].consultation_pitch_sentence,
               link:'/consultation_detail?id=' + res.data.consultation_list[i].id,
               popularity: res.data.consultation_list[i].popularity,
+              end_date: res.data.consultation_list[i].end_date,
             }
           );
         }
+
         this.setState({
           consultation_list: tmp_state,
         });

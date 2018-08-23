@@ -26,10 +26,21 @@
   border-left: 0px!important;
 }
 
+.remove_padding_profile_pic {
+  padding-right: 0px!important;
+}
+
 /* BODY */
 
 .body {
   margin-top: 3em!important;
   margin-bottom: 3em!important;
   width: 100%!important;
+}
+
+
+/* CARDS */
+
+.text_alignements_cards{
+  text-align: left;
 }

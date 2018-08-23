@@ -11,8 +11,7 @@ import {
   Message,
   Segment
 } from 'semantic-ui-react'
-import { CookiesProvider, withCookies, Cookies } from 'react-cookie';
-import { instanceOf } from 'prop-types';
+import { withCookies } from 'react-cookie';
 import axios from 'axios';
 
 import * as constants from '../CONSTANTS';
@@ -107,6 +106,7 @@ class LoginPage extends Component {
     this.handleFormAuthenticationSubmit = this.handleFormAuthenticationSubmit.bind(this);
   }
 
+
   handleFormAuthenticationSubmit(email, password) {
 
     axios.get("http://localhost:3001/users/")
@@ -121,17 +121,28 @@ class LoginPage extends Component {
           i++;
         }
         if(user_found) {
+          i--;
           const { cookies } = this.state.cookies;
           const d = new Date();
           d.setTime(d.getTime() + (constants.ONE_HOUR));
           cookies.set('logged_in', res.data.user_list[i].id, {expires : d});
+
+          const user_info = {
+            id: res.data.user_list[i].id,
+            first_name: res.data.user_list[i].first_name,
+            last_name: res.data.user_list[i].last_name,
+            accreditation_level: res.data.user_list[i].accreditation_level,
+            photo: res.data.user_list[i].photo,
+          }
+          cookies.set('user_info', user_info ,{expires : d})
+          
           this.setState ({
             successful_login: true,
-          })
-          console.log(this.state.successful_login)
+          });
         } else {
           this.setState({
             error: true,
+            successful_login: false,
           });
         }
 
@@ -142,27 +153,25 @@ class LoginPage extends Component {
   render() {
     //In case of successful login
     const { from } = this.props.location.state || { from: { pathname: '/' } }
-    const { redirectToReferrer } = this.state.successful_login
-
-    if (redirectToReferrer === true) {
-      //TODO COMPRENDRE POURQUOI CA NE REDIRIGE PAS ACTUELLEMENT
-      console.log("In the clear")
-      return <Redirect to={from} />
+    // console.log("sucessful-login " + this.state.successful_login)
+    if (this.state.successful_login === true) {
+      return (<Redirect to={from.pathname} />);
+    } else {
+      //Otherwise
+      return(
+        <div className='login-form background_image'>
+          <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+            <Grid.Column style={{ maxWidth: 450 }}>
+              <Header as='h2' color='blue' textAlign='center'>
+                Log-in to your account
+              </Header>
+              <FormAuthentication error={this.state.error} onFormAuthenticationSubmit={this.handleFormAuthenticationSubmit}/>
+              <SignUpMessage/>
+            </Grid.Column>
+          </Grid>
+        </div>
+      );
     }
-    //Otherwise
-    return(
-      <div className='login-form background_image'>
-        <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
-          <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as='h2' color='blue' textAlign='center'>
-              Log-in to your account
-            </Header>
-            <FormAuthentication error={this.state.error} onFormAuthenticationSubmit={this.handleFormAuthenticationSubmit}/>
-            <SignUpMessage/>
-          </Grid.Column>
-        </Grid>
-      </div>
-    );
   }
 }
 

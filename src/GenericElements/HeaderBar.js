@@ -1,5 +1,3 @@
-
-
 import React from 'react'
 import {
   Container,
@@ -10,47 +8,61 @@ import {
 import {
   Link
 } from "react-router-dom";
-import logoImg  from './../img/logo.png'
-import profileImg  from './../img/profile.png'
+import { withCookies } from 'react-cookie';
+
+
 import "./GenericCSS.css"
 
-const HeaderBar = () => (
-  <div>
-    <Menu fixed='top' className="header_bar" >
-      <Container>
-        <Menu.Item as={Link} to="/" header className="header_bar_hide_border_left_main_button">
-          <Image size='mini' src={logoImg} style={{ marginRight: '1.5em' }} />
-          Aurora
-        </Menu.Item>
-        <Menu.Item as={Link} to="/">Liste des sujets</Menu.Item>
+var images = require.context('../img', true);
 
-        <Dropdown item simple text='Dropdown'>
-          <Dropdown.Menu>
-            <Dropdown.Item>List Item</Dropdown.Item>
-            <Dropdown.Item>List Item</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Header>Header Item</Dropdown.Header>
-            <Dropdown.Item>
-              <i className='dropdown icon' />
-              <span className='text'>Submenu</span>
+class HeaderBar extends React.Component {
+  constructor(props){
+    super(props);
+    const { cookies } = props;
+
+    this.state = {
+      user_info: cookies.get('user_info'),
+    }
+    this.logout = this.logout.bind(this);
+  }
+
+  logout() {
+    const { cookies } = this.props;
+    cookies.remove("logged_in");
+    cookies.remove("user_info");
+  }
+
+
+  render() {
+    return(
+      <div>
+        <Menu fixed='top' className="header_bar" >
+          <Container>
+            <Menu.Item as={Link} to="/" header className="header_bar_hide_border_left_main_button">
+              <Image size='mini' src={images("./logo.png")} style={{ marginRight: '1.5em' }} />
+              Aurora
+            </Menu.Item>
+            <Menu.Item as={Link} to="/">Liste des sujets</Menu.Item>
+
+            <Menu.Item position="right" className="remove_padding_profile_pic">
+              <Image size='mini' src={images(this.state.user_info.photo)}  circular />
+            </Menu.Item>
+            <Dropdown item simple text={this.state.user_info.first_name + " " + this.state.user_info.last_name}>
               <Dropdown.Menu>
-                <Dropdown.Item>List Item</Dropdown.Item>
-                <Dropdown.Item>List Item</Dropdown.Item>
+                <Dropdown.Item>Mon compte</Dropdown.Item>
+                <Dropdown.Item onClick={this.logout}>Déconnexion</Dropdown.Item>
               </Dropdown.Menu>
-            </Dropdown.Item>
-            <Dropdown.Item>List Item</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-        <Menu.Item as={Link} to="/" position="right">
-          <Image size='mini' src={profileImg} style={{ marginRight: '1.5em' }} circular />
-          Identifiez-vous
-        </Menu.Item>
-      </Container>
-    </Menu>
-  </div>
-)
+            </Dropdown>
+          </Container>
+        </Menu>
+      </div>
+    );
+  }
+// src={require("./../img/profile_pic/3.png")}
+}
 
-export default HeaderBar
+
+export default withCookies(HeaderBar)
 
 
 
