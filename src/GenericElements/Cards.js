@@ -12,25 +12,13 @@ import {
 
 import "./GenericCSS.css"
 
-const getDaysLeft = ( date1, date2 ) => {
-  var one_day=1000*60*60*24;
-
-  // Convert both dates to milliseconds
-  var date1_ms = date1.getTime();
-  var date2_ms = date2.getTime();
-
-  // Calculate the difference in milliseconds
-  var difference_ms = date2_ms - date1_ms;
-
-  // Convert back to days and return
-  return Math.round(difference_ms/one_day);
-}
+var images = require.context('../img', true);
 
 const GenericCard = (props) => {
-
+  console.log(props.image)
     return (
       <Card >
-        <Image src={props.image} as={Link} to={props.link} />
+        <Image src={images(props.image)} as={Link} to={props.link} />
         <Card.Content>
           <Card.Header as={Link} to={props.link} className="text_alignements_cards">{props.header}</Card.Header>
           <Card.Meta as={Link} to={props.link} className="text_alignements_cards">{props.meta}</Card.Meta>
@@ -39,7 +27,7 @@ const GenericCard = (props) => {
         <Card.Content extra>
           <a style={{float: 'left'}}>
             <Icon name='time' />
-            {getDaysLeft(new Date(), new Date(props.end_date))} jours restants
+            {props.days_left} jours restants
           </a>
           <a style={{float: 'right'}}>
             <Icon name='fire' />
@@ -63,7 +51,7 @@ const TripleCardGroup = (props) => {
              description={props.data_card_1.description}
              link={props.data_card_1.link}
              popularity={props.data_card_1.popularity}
-             end_date={props.data_card_1.end_date}
+             days_left={props.data_card_1.days_left}
            />
          </Grid.Column>
          {props.data_card_2 &&
@@ -75,7 +63,7 @@ const TripleCardGroup = (props) => {
                description={props.data_card_2.description}
                link={props.data_card_2.link}
                popularity={props.data_card_2.popularity}
-               end_date={props.data_card_2.end_date}
+               days_left={props.data_card_2.days_left}
              />
            </Grid.Column>}
          {props.data_card_3 &&
@@ -87,7 +75,7 @@ const TripleCardGroup = (props) => {
                description={props.data_card_3.description}
                link={props.data_card_3.link}
                popularity={props.data_card_3.popularity}
-               end_date={props.data_card_3.end_date}
+               days_left={props.data_card_3.days_left}
              />
            </Grid.Column>}
        </Grid.Row>

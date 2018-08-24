@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Grid,
   Input,
   Container,
   Button
@@ -12,7 +11,8 @@ import Footer from "./../GenericElements/Footer"
 import Body from "./../GenericElements/Body"
 import TopPanel from "./../GenericElements/TopPanel"
 import CardsDashboard from "./../GenericElements/Cards"
-import FavoriteImg  from './../img/syndicat.jpg'
+
+import * as constants from '../CONSTANTS';
 
 import "./ConsultationList.css"
 
@@ -26,6 +26,7 @@ class SearchBar extends React.Component {
         searchInput: "",
         favorite: false,
         popular: false,
+        vote: false,
       },
     }
     this.handleClick = this.handleClick.bind(this);
@@ -53,6 +54,9 @@ class SearchBar extends React.Component {
         break;
       case "Populaires":
         current_state.popular = !current_state.popular;
+        break;
+      case "Votes":
+        current_state.vote = !current_state.vote;
         break;
       default:
     }
@@ -107,7 +111,7 @@ class SearchBar extends React.Component {
         <Button
           icon='star'
           size="large"
-          content='Favoris'
+          content='Favoris (à faire)'
           className={this.state.searchDetails.favorite ?
             "button_search favorite button_favorite_clicked" : "button_search favorite "}
           onClick={this.handleClick.bind(this, "Favoris")}/>
@@ -118,30 +122,48 @@ class SearchBar extends React.Component {
             className={this.state.searchDetails.popular ?
               "button_search popular button_popular_clicked" : "button_search popular "}
             onClick={this.handleClick.bind(this, "Populaires")}/>
+            <Button
+              icon='deaf'
+              size="large"
+              content='Avec vote'
+              className={this.state.searchDetails.vote ?
+                "button_search vote button_vote_clicked" : "button_search vote "}
+              onClick={this.handleClick.bind(this, "Votes")}/>
       </Container>
     );
   }
-
 }
 
+const getDaysLeft = ( date1, date2 ) => {
+  var one_day=1000*60*60*24;
+  // Convert both dates to milliseconds
+  var date1_ms = date1.getTime();
+  var date2_ms = date2.getTime();
+  // Calculate the difference in milliseconds
+  var difference_ms = date2_ms - date1_ms;
+  // Convert back to days and return
+  return Math.round(difference_ms/one_day);
+}
 
+const sortByNumber = (consultation_list) => {
+  return (
+    consultation_list.sort(function(a, b) {
+      return a.days_left - b.days_left;
+    })
+  );
+}
 
 class ConsultationList extends React.Component {
-  // static propTypes = {
-  //   cookies: instanceOf(Cookies).isRequired
-  // };
 
   constructor(props){
     super(props);
 
-    // const { cookies } = this.props;
-
     this.state = {
       number_of_consultations: 0,
       consultation_list: [],
-      // name: cookies.get('name') || 'Ben',
+      displayed_list: [],
     }
-    this.getSearchDetails = this.getSearchDetails.bind(this);
+    this.getFilteredList = this.getFilteredList.bind(this);
   }
 
 
@@ -153,40 +175,68 @@ class ConsultationList extends React.Component {
         for(let i in res.data.consultation_list){
           tmp_state.push(
             {
-              image: FavoriteImg,
+              image: res.data.consultation_list[i].vignette_image,
               header: res.data.consultation_list[i].consultation_name,
               description: res.data.consultation_list[i].consultation_pitch_sentence,
               link:'/consultation_detail?id=' + res.data.consultation_list[i].id,
               popularity: res.data.consultation_list[i].popularity,
-              end_date: res.data.consultation_list[i].end_date,
+              days_left: getDaysLeft(new Date(), new Date(res.data.consultation_list[i].end_date)),
+              vote: res.data.consultation_list[i].vote,
             }
           );
         }
 
         this.setState({
-          consultation_list: tmp_state,
+          consultation_list: sortByNumber(tmp_state),
+          displayed_list: sortByNumber(tmp_state),
         });
       });
   }
 
 
-  getSearchDetails(searchDetails) {
-      console.log(searchDetails);
-      //TODO Faire l'algorithme de recherche
+  getFilteredList(searchDetails) {
+      let displayed_list = this.state.consultation_list;
+      //Votes
+      if (searchDetails.vote) {
+        displayed_list = displayed_list.filter(function(a) {
+          return a.vote;
+        })
+      }
+      //Favorite
+      if (searchDetails.favorite) {
+        //FAIRE FAVORIS
+        //TODO FAIRE FAVORIS
+      }
+      //Popularity
+      if (searchDetails.popular) {
+        displayed_list.sort(function(a, b) {
+            return b.popularity - a.popularity;
+        })
+      }else {
+        displayed_list = sortByNumber(displayed_list)
+      }
+      //Search input
+      displayed_list = displayed_list.filter(function(a) {
+        // console.log(a.header.toLowerCase().search(searchDetails.searchInput.toLowerCase()) !== -1)
+        return a.header.toLowerCase().search(searchDetails.searchInput.toLowerCase()) !== -1;
+      })
+
+      this.setState({
+        displayed_list: displayed_list,
+      });
   }
 
   render() {
-
     return (
       <React.Fragment>
           <HeaderBar/>
           <TopPanel
             title="Liste des sujets disponibles"
             subtitle="Parcourez les opinions de votre entreprise"
-            image="/img/rsz_brainstorming_sombre.jpg"/>
+            image={constants.IMAGE_BRAINSTORMING}/>
           <Body>
-            <SearchBar callbackFromParent={this.getSearchDetails}/>
-            <CardsDashboard card_list={this.state.consultation_list}/>
+            <SearchBar callbackFromParent={this.getFilteredList}/>
+            <CardsDashboard card_list={this.state.displayed_list}/>
           </Body>
           <Footer/>
       </React.Fragment>

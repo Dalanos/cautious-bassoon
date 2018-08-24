@@ -31,9 +31,9 @@ const InfoBar = props => {
             <Image src={require('./../img/circle.png')} size='tiny'/>
           </Grid.Column>
           <Grid.Column width={10} textAlign='left'>
-            <h3>{props.info.consultation_name}</h3>
+            <h3>{props.info.consultation_details.consultation_name}</h3>
 
-            <i>{props.info.consultation_pitch_sentence}</i>
+            <i>{props.info.consultation_details.consultation_pitch_sentence}</i>
           </Grid.Column>
           <Grid.Column width={3}>
             Trois jours restants avant l'ouverture des votes
@@ -171,6 +171,7 @@ class ConsultationDetail extends React.Component {
     this.state = {
       current_navigation: "Opinions",
       id: parsed.id,
+      consultation_details: {},
     };
     this.handleNavigationClick = this.handleNavigationClick.bind(this);
   }
@@ -179,20 +180,24 @@ class ConsultationDetail extends React.Component {
     axios.get("http://localhost:3001/consultation_details/")
       .then(res => {
         var consultation_info = res.data.consultation_list[this.state.id-1];
+        var tmp_state =
+          {
+            consultation_name: consultation_info.consultation_name,
+            consultation_pitch_sentence: consultation_info.consultation_pitch_sentence,
+            consultation_description: consultation_info.consultation_description,
+            consultation_organisator_id: consultation_info.consultation_organisator_id,
+            start_date: consultation_info.start_date,
+            end_date: consultation_info.end_date,
+            blockchain_vote: consultation_info.blockchain_vote,
+            media_video: consultation_info.media_video,
+            media_blog: consultation_info.media_blog,
+            media_comments: consultation_info.media_comments,
+            media_yammer: consultation_info.media_yammer,
+            detail_image: consultation_info.detail_image
+          }
 
         this.setState({
-          consultation_name: consultation_info.consultation_name,
-          consultation_pitch_sentence: consultation_info.consultation_pitch_sentence,
-          consultation_description: consultation_info.consultation_description,
-          consultation_organisator_id: consultation_info.consultation_organisator_id,
-          start_date: consultation_info.start_date,
-          end_date: consultation_info.end_date,
-          blockchain_vote: consultation_info.blockchain_vote,
-          media_video: consultation_info.media_video,
-          media_blog: consultation_info.media_blog,
-          media_comments: consultation_info.media_comments,
-          media_yammer: consultation_info.media_yammer,
-          background_image: consultation_info.background_image
+          consultation_details: tmp_state,
         });
       });
   }
@@ -223,7 +228,10 @@ class ConsultationDetail extends React.Component {
       <React.Fragment>
         <HeaderBar/>
         <Body>
-          <TopPanel message="[Inserer image]"/>
+          <TopPanel
+            image="./consultation_detail/4_Renouvellement du prestataire du restaurant dentreprise.jpg"/>
+          <TopPanel
+            image={this.state.consultation_details.detail_image}/>
           <InfoBar info={this.state}/>
           <Divider />
           <NavigationBar active={this.state.current_navigation} onClick={(e) => this.handleNavigationClick(e)}/>

@@ -8,6 +8,11 @@
     color: rgb(249, 39, 39)!important;
 }
 
+.button.vote:hover {
+    opacity: 1;
+    color: #4183c4!important;
+}
+
 .button_search {
   text-align: left!important;
   background-color: transparent!important;
@@ -21,6 +26,9 @@
   color: rgb(249, 39, 39)!important;
 }
 
+.button_vote_clicked {
+  color: #4183c4!important;
+}
 .search_bar {
   text-align: left;
   margin-bottom: 3em;

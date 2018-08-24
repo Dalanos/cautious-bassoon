@@ -5,12 +5,6 @@ import Body from "./../GenericElements/Body"
 import TopPanel from "./../GenericElements/TopPanel"
 import CardsDashboard from "./../GenericElements/Cards"
 import "./Dashboard.css"
-import FavoriteImg  from './../img/favorite.png'
-import PopularImg  from './../img/flame.png'
-import CreateImg  from './../img/new_project.png'
-import NotificationImg  from './../img/notification.png'
-import ProfileImg  from './../img/profile.png'
-import AllAvailableImg  from './../img/world.png'
 
 
 class Dashboard extends React.Component {
