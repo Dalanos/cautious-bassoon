@@ -229,8 +229,6 @@ class ConsultationDetail extends React.Component {
         <HeaderBar/>
         <Body>
           <TopPanel
-            image="./consultation_detail/4_Renouvellement du prestataire du restaurant dentreprise.jpg"/>
-          <TopPanel
             image={this.state.consultation_details.detail_image}/>
           <InfoBar info={this.state}/>
           <Divider />

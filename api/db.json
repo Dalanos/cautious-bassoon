@@ -139,7 +139,7 @@
             "media_comments": true,
             "media_yammer": true,
             "vignette_image": "./consultation_vignette/4_Renouvellement du prestataire du restaurant dentreprise.jpeg",
-            "detail_image": "./consultation_detail/4_Renouvellement du prestataire du restaurant dentreprise.jpg",
+            "detail_image": "./consultation_detail/nombizarre.jpg",
             "vote": false
           },
           {
@@ -157,6 +157,7 @@
             "media_comments": true,
             "media_yammer": true,
             "vignette_image": "./consultation_vignette/5_Campagne publicitaire télévision - Printemps 2019.jpeg",
+            "detail_image": "./consultation_detail/demenagement.png",
             "vote": false
           },
           {

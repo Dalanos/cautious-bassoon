@@ -15,7 +15,6 @@ import "./GenericCSS.css"
 var images = require.context('../img', true);
 
 const GenericCard = (props) => {
-  console.log(props.image)
     return (
       <Card >
         <Image src={images(props.image)} as={Link} to={props.link} />

@@ -8,38 +8,21 @@ import "./GenericCSS.css"
 var images = require.context('../img', true);
 
 class TopPanel extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      image: this.props.image,
-    }
-  }
 
   render() {
     var style = {};
-    console.log(this.state.image)
-    console.log(this.props.image)
-    console.log(this.state.image === undefined)
-    if(this.state.image !== undefined) {
+    if(this.props.image !== undefined) {
       style = {
         // background-image: url("../img/structural/nature_sombre.jpg");
         // backgroundImage: "url("+ window.location.origin + this.props.image +")",
-        backgroundImage: "url("+ images("./consultation_detail/test.jpg") + ")",
-        // backgroundImage: "url("+ images(this.state.image) + ")",
+        // backgroundImage: "url("+ images("./consultation_detail/test.jpg") + ")",
+        backgroundImage: "url("+ images(this.props.image) + ")",
         // ./consultation_detail/4_Renouvellement du prestataire du restaurant dentreprise.jpg
         // /img/rsz_brainstorming_sombre.jpg
         backgroundSize: "cover",
         backgroundPosition: "top center",
       }
     }
-    // else {
-    //   style = {
-    //     // backgroundColor: "white",
-    //     backgroundSize: "cover",
-    //     backgroundPosition: "top center",
-    //   }
-    // }
-    console.log(style)
 
     return (
       <div
