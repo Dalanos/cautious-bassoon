@@ -12,6 +12,7 @@ import ConsultationList from "./ConsultationList/ConsultationList"
 import ConsultationDetail from "./ConsultationDetail/ConsultationDetail"
 import PrivateRoute from "./GenericElements/PrivateRoute"
 import Test from "./test"
+import OpinionDetail from "./OpinionDetail/OpinionDetail"
 
 import './App.css';
 
@@ -28,6 +29,7 @@ class App extends Component {
               <PrivateRoute exact path="/new_consultation" component={NewConsultation}/>
               <PrivateRoute exact path="/consultation_list" component={ConsultationList}/>
               <PrivateRoute exact path="/consultation_detail" component={ConsultationDetail}/>
+              <PrivateRoute exact path="/opinion_detail" component={OpinionDetail}/>
               <PrivateRoute exact path="/TicTacToe" component={Game}/>
             </div>
         </HashRouter>

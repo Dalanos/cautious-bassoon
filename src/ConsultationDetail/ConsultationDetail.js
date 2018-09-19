@@ -13,6 +13,10 @@ import {
   Checkbox,
   Divider
 } from 'semantic-ui-react'
+import {
+  Link
+} from "react-router-dom";
+import { withCookies } from 'react-cookie';
 // import {
 //   Link
 // } from "react-router-dom";
@@ -20,7 +24,10 @@ import HeaderBar from "./../GenericElements/HeaderBar"
 import Footer from "./../GenericElements/Footer"
 import Body from "./../GenericElements/Body"
 import TopPanel from "./../GenericElements/TopPanel"
+
 import "./ConsultationDetail.css"
+
+var images = require.context('../img', true);
 
 const InfoBar = props => {
   return (
@@ -28,7 +35,7 @@ const InfoBar = props => {
       <Grid>
         <Grid.Row stretched>
           <Grid.Column width={3}>
-            <Image src={require('./../img/circle.png')} size='tiny'/>
+            <Image src={images(props.info.organisator_photo)} size='tiny'/>
           </Grid.Column>
           <Grid.Column width={10} textAlign='left'>
             <h3>{props.info.consultation_details.consultation_name}</h3>
@@ -47,9 +54,14 @@ const InfoBar = props => {
 const DescriptionView = props => {
   return (
     <Container>
+      {/* <React.Fragment>
+        {props.desc}
+      </React.Fragment> */}
+      {/* <div dangerouslySetInnerHTML={{ __html: this.props.match.description }} />
       <p>
         {props.desc}
-      </p>
+      </p> */}
+      <div dangerouslySetInnerHTML={{ __html: props.desc }} />
     </Container>
   )
 };
@@ -75,87 +87,160 @@ const NavigationBar = props => {
     );
 };
 
+const SearchBlock = props => {
+  return (
+    <Grid.Column width={3} className="encadrer_bloc">
+      Filtres:
+      <Form>
+        <Form.Field>
+          <label>First Name</label>
+          <input placeholder='First Name' />
+        </Form.Field>
+        <Form.Field>
+          <label>Last Name</label>
+          <input placeholder='Last Name' />
+        </Form.Field>
+        <Form.Field>
+          <Checkbox label='I agree to the Terms and Conditions' />
+        </Form.Field>
+        <Button type='submit'>Submit</Button>
+      </Form>
+    </Grid.Column>
+  )
+};
+
+const Réactions = props => {
+  return (
+    <Grid.Column width={4}>
+      <Card className="reactions_box">
+        <Card.Content>
+          <Card.Header>Réactions</Card.Header>
+          <Card.Meta>Que pensez vous de cette consultation?</Card.Meta>
+          <Card.Description>
+            Ajouter un truc visuel qui montre les votes
+          </Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <div className='ui two buttons'>
+            <Button  color='green'>
+              <Icon  size='large' name='smile outline' />
+            </Button>
+            <Button  color='red'>
+              <Icon  size='large' name='frown outline' />
+            </Button>
+          </div>
+        </Card.Content>
+      </Card>
+    </Grid.Column>
+  )
+};
+
+const OpinionCard = (props) => {
+  if(props.author_detail) {
+    const shortened_title = props.opinion_detail.title.substring(0, 45);
+    const shortened_content = props.opinion_detail.content.substring(0, 70);
+    return (
+      <Item className="encadrer_bloc">
+        <Item.Image
+          size='tiny'
+          src={images(props.author_detail.photo)}
+          as={Link}
+          to={'/opinion_detail?id_consultation=' + props.id_consultation + '&id_opinion=' + props.opinion_detail.id}
+          circular/>
+
+        <Item.Content verticalAlign='middle'>
+          <Item.Header>
+            {shortened_title}
+          </Item.Header>
+          <Item.Meta>
+            {props.author_detail.first_name + " " + props.author_detail.last_name}
+          </Item.Meta>
+          <Item.Description>
+            <p>{shortened_content}</p>
+          </Item.Description>
+        </Item.Content>
+
+        <Item.Content verticalAlign='middle' className="buttons_alignement">
+          <Button.Group vertical labeled icon>
+            <Button icon='like' content={props.opinion_detail.likes} className="button_like_fav"/>
+            <Button icon='favorite' content='Favorite' className="button_like_fav"/>
+          </Button.Group>
+        </Item.Content>
+      </Item>
+    );
+  }else {
+    return null;
+  }
+
+}
+
+class OpinionListAsCard extends React.Component  {
+
+  render () {
+    const opinion_list=this.props.state.opinion_list;
+    const id_consultation = this.props.state.id_consultation;
+    const number_of_opinions = this.props.state.number_of_opinions;
+    // Choice to avoid running into an error if user_list not yet loaded
+    const user_list = this.props.state.user_list || {};
+
+    var render = [];
+    for (var i = 0; i < number_of_opinions; i++) {
+      const current_opinion = opinion_list[i];
+      render.push(
+        <OpinionCard
+          id_consultation={id_consultation}
+          opinion_detail={current_opinion}
+          author_detail={user_list[current_opinion.id_author]}
+          key={i}/>
+      );
+    }
+
+    return (
+      <Grid.Column width={9} textAlign='left'>
+        <Item.Group>
+          {render}
+        </Item.Group>
+      </Grid.Column>
+    );
+  }
+};
+
+
 class OpinionView extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      id_consultation: props.id_consultation,
+    };
+  }
+
+  componentDidMount() {
+    //TODO: Mutualiser en fonction avec OpinionDetal
+    axios.get("http://localhost:3001/opinions_of_consultation_" + this.state.id_consultation)
+      .then(res => {
+        this.setState({
+          number_of_opinions: res.data.number_of_opinions,
+          opinion_list: res.data.opinion_list
+        });
+        axios.get("http://localhost:3001/users")
+          .then(res => {
+            this.setState({
+              user_list: res.data.user_list,
+            });
+          }
+        );
+      }
+    );
+  }
 
   render() {
     return (
       <React.Fragment>
         <Grid>
           <Grid.Row stretched className="margin_opinion_row">
-            <Grid.Column width={3} className="encadrer_bloc">
-              Filtres:
-              <Form>
-                <Form.Field>
-                  <label>First Name</label>
-                  <input placeholder='First Name' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Last Name</label>
-                  <input placeholder='Last Name' />
-                </Form.Field>
-                <Form.Field>
-                  <Checkbox label='I agree to the Terms and Conditions' />
-                </Form.Field>
-                <Button type='submit'>Submit</Button>
-              </Form>
-            </Grid.Column>
-            <Grid.Column width={9} textAlign='left'>
-
-
-              <Item.Group>
-                <Item className="encadrer_bloc">
-
-                        <Item.Image size='tiny' src={require('./../img/circle.png')} circular/>
-
-                        <Item.Content verticalAlign='middle'>
-                          <Item.Header>
-                            Je suis tout à fait d'accord avec ce sujet
-                          </Item.Header>
-                          <Item.Meta>
-                            Jean-Luc Crapouillou
-                          </Item.Meta>
-                          <Item.Description>
-                            <p>Franchement, vous avez raison, et voila pourquoi...</p>
-                          </Item.Description>
-                        </Item.Content>
-
-                        <Item.Content verticalAlign='middle' className="buttons_alignement">
-                          <Button.Group vertical labeled icon>
-                            <Button icon='like' content='2014' className="button_like_fav"/>
-                            <Button icon='favorite' content='Favorite' className="button_like_fav"/>
-                            {/* <Button icon='time' content='Read Later' /> */}
-                          </Button.Group>
-                        </Item.Content>
-
-
-                </Item>
-
-
-              </Item.Group>
-
-
-            </Grid.Column>
-            <Grid.Column width={4}>
-              <Card className="reactions_box">
-                <Card.Content>
-                  <Card.Header>Réactions</Card.Header>
-                  <Card.Meta>Que pensez vous de cette consultation?</Card.Meta>
-                  <Card.Description>
-                    Ajouter un truc visuel qui montre les votes
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <div className='ui two buttons'>
-                    <Button  color='green'>
-                      <Icon  size='large' name='smile outline' />
-                    </Button>
-                    <Button  color='red'>
-                      <Icon  size='large' name='frown outline' />
-                    </Button>
-                  </div>
-                </Card.Content>
-              </Card>
-            </Grid.Column>
+            <SearchBlock/>
+            <OpinionListAsCard state={this.state}/>
+            <Réactions/>
           </Grid.Row>
         </Grid>
       </React.Fragment>
@@ -166,12 +251,14 @@ class OpinionView extends React.Component {
 class ConsultationDetail extends React.Component {
   constructor(props){
     super(props);
+    const { cookies } = props;
     const queryString = require('query-string');
     const parsed = queryString.parse(props.location.search);
     this.state = {
-      current_navigation: "Opinions",
+      current_navigation: "Description",
       id: parsed.id,
       consultation_details: {},
+      organisator_photo: cookies.get('user_info').photo,
     };
     this.handleNavigationClick = this.handleNavigationClick.bind(this);
   }
@@ -179,7 +266,8 @@ class ConsultationDetail extends React.Component {
   componentDidMount() {
     axios.get("http://localhost:3001/consultation_details/")
       .then(res => {
-        var consultation_info = res.data.consultation_list[this.state.id-1];
+        var consultation_info = res.data.consultation_list[this.state.id];
+
         var tmp_state =
           {
             consultation_name: consultation_info.consultation_name,
@@ -227,17 +315,18 @@ class ConsultationDetail extends React.Component {
     return (
       <React.Fragment>
         <HeaderBar/>
+        <TopPanel
+          image={this.state.consultation_details.detail_image}/>
         <Body>
-          <TopPanel
-            image={this.state.consultation_details.detail_image}/>
+
           <InfoBar info={this.state}/>
-          <Divider />
+          {/* <Divider /> */}
           <NavigationBar active={this.state.current_navigation} onClick={(e) => this.handleNavigationClick(e)}/>
           {/* <Divider /> */}
           { this.state.current_navigation === "Description" ?
-            <DescriptionView desc={this.state.consultation_description}/> : null }
+            <DescriptionView desc={this.state.consultation_details.consultation_description}/> : null }
           { this.state.current_navigation === "Opinions" ?
-            <OpinionView /> : null }
+            <OpinionView id_consultation={this.state.id} /> : null }
         </Body>
         <Footer/>
       </React.Fragment>
@@ -246,4 +335,4 @@ class ConsultationDetail extends React.Component {
 
 }
 
-export default ConsultationDetail
+export default withCookies(ConsultationDetail)
