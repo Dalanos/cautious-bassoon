@@ -358,6 +358,7 @@
         "id_author": 4,
         "title": "Une idée intéressante",
         "content": "m ligula id sapien commodo sodales sit amet ac est.<br/>Phasellus ac odio mi. Nam id pulvinar tortor. Nulla aliquet nisi id lorem rhoncus, at convallis lectus malesuada. Nam fermentum ante id dolor volutpat, vitae consequat ligula sagittis. Donec magna mi, sodales vitae enim quis, sagittis tincidunt enim. Maecenas porttitor dignissim lacus, eget pharetra tellus bibendum sed. Nulla mauris diam, lobortis sit amet feugiat quis, hendrerit vel est. In facilisis arcu ut accumsan mattis. Curabitur eu elit eu quam varius fringilla. Mauris iaculis lorem nec nibh sollicitudin vulputate. Donec tincidunt varius erat nec consectetur. Vestibulum dignissim at velit rutrum fermentum. Proin suscipit ornare elit, eu feugiat nisl facilisis eu. Nullam a malesuada lacus. Pellentesque ante augue, ullamcorper sit amet nunc eget, congue scelerisque est. Phasellus in dapibus tortor, sit amet hendrerit sapien.<br/>Duis porttitor nisl tortor, eget laoreet orci accumsan eu. Nulla pretium nunc eget efficitu",
+        "post_date": "2018-08-01T10:20:30Z",
         "likes": 38,
         "comments": {
             "number_of_comments": 3,
@@ -385,6 +386,7 @@
         "id_author": 2,
         "title": "Augmentation du personnel aux heures de pointes",
         "content": "",
+        "post_date": "2018-08-01T10:20:30Z",
         "likes": 12,
         "comments": {
             "number_of_comments": 3,
@@ -412,6 +414,7 @@
         "id_author": 3,
         "title": "C'est une totale et complête aberration à mes yeux",
         "content": "Cela fait maintenant 20 ans que je travaille en ventes, et ce que je constate depuis que je suis ici est une dégradation des conditions",
+        "post_date": "2018-08-01T10:20:30Z",
         "likes": 2,
         "comments": {
             "number_of_comments": 3,
@@ -439,6 +442,7 @@
         "id_author": 0,
         "title": "Acceptation des tickets restaurants",
         "content": "Ma proposition concerne plus les prestataires qui travaillent dans nos rangs et qui ont souvent des tickets restaurant de la part de leurs employeurs",
+        "post_date": "2018-08-01T10:20:30Z",
         "likes": 124,
         "comments": {
             "number_of_comments": 3,
